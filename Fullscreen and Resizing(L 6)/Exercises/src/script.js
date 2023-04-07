@@ -1,3 +1,4 @@
+import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
@@ -22,9 +23,62 @@ scene.add(mesh)
  * Sizes
  */
 const sizes = {
-    width: 800,
-    height: 600
+    width: window.innerWidth,
+    height: window.innerHeight
 }
+
+window.addEventListener('resize',() =>{
+    // console.log('Window has been resized')
+    //Update sizes
+    sizes.width = window.innerWidth
+    sizes.height = window.innerHeight
+
+    // camera update
+    camera.aspect = sizes.width/sizes.height
+    camera.updateProjectionMatrix()
+
+    // renderer update
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2))
+})
+
+window.addEventListener('dblclick',() =>{
+    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+    if(!fullscreenElement){
+        if(canvas.requestFullscreen){
+            canvas.requestFullscreen()
+        }
+        else if(canvas.webkitRequestFullscreen){
+            canvas.webkitRequestFullscreen()
+        }
+        
+        // console.log('Go full screen')
+    }
+    else{
+        // console.log('Leave full screen')
+        if(document.exitFullscreen){
+            document.exitFullscreen()
+        }
+        else if(document.webkitExitFullscreen){
+            document.webkitExitFullscreen()
+        }
+    }
+})
+
+/* this is correct but won't run on safari
+
+window.addEventListener('dblclick',() =>{
+    if(!document.fullscreenElement){
+        canvas.requestFullscreen()
+        // console.log('Go full screen')
+    }
+    else{
+        // console.log('Leave full screen')
+        document.exitFullscreen()
+    }
+})
+
+*/
 
 /**
  * Camera
@@ -45,6 +99,7 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
 renderer.setSize(sizes.width, sizes.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2))
 
 /**
  * Animate
