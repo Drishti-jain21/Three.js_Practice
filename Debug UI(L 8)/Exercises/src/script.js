@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import gsap from 'gsap'
 
 /**
  * Base
@@ -10,68 +11,17 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-// Object (cube)
-// const geometry = new THREE.BoxGeometry(1, 1, 1,2,2,2)
-// const material = new THREE.MeshBasicMaterial({ 
-//     color: 0xff0000,
-//     wireframe : true 
-// })
-// const mesh = new THREE.Mesh(geometry, material)
-// scene.add(mesh)
-
-// Creating our own triangle
-// const geometry = new THREE.BufferGeometry()
-// const position = new Float32Array([
-//     0, 0, 0,  // v1
-//     0, 1, 0, // v2
-//     1, 0, 0  // v3
-// ])
-// or
-// const position = new Float32Array(9)
-
-// vertex 1
-// position[0] = 0
-// position[1] = 0
-// position[2] = 0
-
-//vertex 2
-// position[3] = 0
-// position[4] = 1
-// position[5] = 0
-
-//vertex 3
-// position[6] = 1
-// position[7] = 0
-// position[8] = 0
-
-// geometry.setAttribute( 'position', new THREE.BufferAttribute( position, 3 ) )
-// const material = new THREE.MeshBasicMaterial({ 
-//     color: 0xff0000,
-//     wireframe : true 
-// })
-// const mesh = new THREE.Mesh(geometry, material)
-// scene.add(mesh)
-
-// Creating bunch of random triangles
-
-const geometry = new THREE.BufferGeometry()
-const count = 50
-const positionArray = new Float32Array(count*3*3)
-for(let i = 0;i<count*3*3;i++){
-    positionArray[i] = (Math.random()-0.5)*4
-}
-geometry.setAttribute( 'position', new THREE.BufferAttribute( positionArray, 3 ) )
-const material = new THREE.MeshBasicMaterial({ 
-    color: 0xff0000,
-    wireframe : true 
-})
+/**
+ * Object
+ */
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
-
-
-
-// Sizes
+/**
+ * Sizes
+ */
 const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
@@ -92,7 +42,10 @@ window.addEventListener('resize', () =>
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
-// Camera
+/**
+ * Camera
+ */
+// Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 3
 scene.add(camera)
@@ -101,14 +54,18 @@ scene.add(camera)
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 
-// Renderer
+/**
+ * Renderer
+ */
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-// Animate
+/**
+ * Animate
+ */
 const clock = new THREE.Clock()
 
 const tick = () =>
