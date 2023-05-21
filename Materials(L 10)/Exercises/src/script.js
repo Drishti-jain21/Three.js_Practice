@@ -80,7 +80,7 @@ const scene = new THREE.Scene()
 // material.shininess = 100
 // material.specular = new THREE.Color('red')
 
-// const material = new THREE.MeshToonMaterial()
+const material = new THREE.MeshToonMaterial()
 // material.gradientMap = gradientTexture
 
 // const material = new THREE.MeshStandardMaterial()
@@ -96,10 +96,10 @@ const scene = new THREE.Scene()
 // material.transparent = true
 // material.alphaMap = doorAlphaTexture
 
-const material = new THREE.MeshStandardMaterial()
-material.metalness = 0.7
-material.roughness = 0.2
-material.envMap = environmentMapTexture
+// const material = new THREE.MeshStandardMaterial()
+// material.metalness = 0.7
+// material.roughness = 0.2
+// material.envMap = environmentMapTexture
 
 
 gui.add(material,'metalness').min(0).max(1).step(0.0001)
@@ -144,6 +144,8 @@ const torus = new THREE.Mesh(
 
 torus.position.x = 1.5
 torus.geometry.setAttribute('uv2',new THREE.BufferAttribute(torus.geometry.attributes.uv.array,2))
+
+
 
 scene.add(sphere,plane,torus)
 
